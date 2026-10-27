@@ -9,12 +9,17 @@
 
     <h2>FORM GỬI EMAIL</h2>
 
-    <form action="mail.php"
+    <form action="mail3.php"
           method="POST"
           enctype="multipart/form-data">
 
         <p>Email người nhận:</p>
-        <input type="email" name="email" required>
+        <input
+        type="text"
+        name="email"
+        placeholder="Nhập nhiều email,cách nhau bằng dấu phẩy"
+        required
+        >
 
         <p>Tiêu đề:</p>
         <input type="text" name="tieude" required>
