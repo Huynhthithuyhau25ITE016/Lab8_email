@@ -10,29 +10,39 @@ $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 try {
     $mail->isSMTP();
     $mail->CharSet = "UTF-8";
-
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
 
     $nguoigui = "hauhtt.25ite@vku.udn.vn";
-
     $matkhau = "m h f j e r p m g x y x v o p v";
-
-    $tennguoigui = "Lab 8 PHP";
 
     $mail->Username = $nguoigui;
     $mail->Password = $matkhau;
-
     $mail->SMTPSecure = "ssl";
     $mail->Port = 465;
 
-    $mail->setFrom($nguoigui, $tennguoigui);
+    $mail->setFrom($nguoigui, "Lab 8 PHP");
 
-    $mail->addAddress("hauhuynh.010100tb@gmail.com");
+    // Lay du lieu tu form
+    $to = $_POST["email"];
+    $tieude = $_POST["tieude"];
+    $content = $_POST["content"];
 
+    $mail->addAddress($to);
     $mail->isHTML(true);
-    $mail->Subject = "Thu nghiem Lab 8";
-    $mail->Body = "<b>Chao ban!</b><br>Gui email thanh cong.";
+    $mail->Subject = $tieude;
+    $mail->Body = nl2br(htmlspecialchars($content));
+
+    // Xu ly file dinh kem neu co
+    if (
+        isset($_FILES["file"]) &&
+        $_FILES["file"]["error"] === UPLOAD_ERR_OK
+    ) {
+        $mail->addAttachment(
+            $_FILES["file"]["tmp_name"],
+            $_FILES["file"]["name"]
+        );
+    }
 
     $mail->send();
 
